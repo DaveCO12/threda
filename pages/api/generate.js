@@ -30,9 +30,14 @@ Output:
 
     const data = await response.json();
 
+    // 👇 LOG THE RAW RESPONSE
+    console.log("GPT Response Raw:", JSON.stringify(data, null, 2));
+
     if (!data || !data.choices || !data.choices[0]?.message?.content) {
-      console.error("Malformed GPT response:", JSON.stringify(data, null, 2));
-      return res.status(500).json({ error: "Malformed response from GPT", raw: data });
+      return res.status(500).json({
+        error: "Malformed response from GPT",
+        raw: data,
+      });
     }
 
     const thread = data.choices[0].message.content.trim();
