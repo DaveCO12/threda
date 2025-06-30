@@ -14,11 +14,17 @@ export default function Home() {
       body: JSON.stringify({ input, tone }),
     });
 
-    const data = await res.json();
-    setOutput(data.thread || 'No output returned.');
-    setLoading(false);
-  };
+const data = await res.json();
 
+if (data.thread) {
+  setOutput(data.thread);
+} else if (data.error) {
+  setOutput(`Error: ${data.error}`);
+} else {
+  setOutput('No thread or error returned from the server.');
+}
+
+setLoading(false);
   return (
     <main style={{ padding: '2rem', fontFamily: 'sans-serif', maxWidth: '600px', margin: 'auto' }}>
       <h1>Threda</h1>
