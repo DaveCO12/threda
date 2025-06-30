@@ -8,23 +8,30 @@ export default function Home() {
 
   const generateThread = async () => {
     setLoading(true);
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ input, tone }),
-    });
 
-const data = await res.json();
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input, tone }),
+      });
 
-if (data.thread) {
-  setOutput(data.thread);
-} else if (data.error) {
-  setOutput(`Error: ${data.error}`);
-} else {
-  setOutput('No thread or error returned from the server.');
-}
+      const data = await res.json();
 
-setLoading(false);
+      if (data.thread) {
+        setOutput(data.thread);
+      } else if (data.error) {
+        setOutput(`Error: ${data.error}`);
+      } else {
+        setOutput('No thread or error returned from the server.');
+      }
+    } catch (err) {
+      setOutput(`Unexpected error: ${err.message}`);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <main style={{ padding: '2rem', fontFamily: 'sans-serif', maxWidth: '600px', margin: 'auto' }}>
       <h1>Threda</h1>
