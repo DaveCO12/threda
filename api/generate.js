@@ -25,9 +25,9 @@ Output:
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.8,
+  	model: "gpt-4o",  // ✅ updated to valid model
+ 	messages: [{ role: "user", content: prompt }],
+ 	temperature: 0.8,
       }),
     });
 
